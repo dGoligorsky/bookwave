@@ -62,16 +62,46 @@ sections.forEach(section => {
     app.stage.addChild(displacementImage)
 
     // app.ticker.add(() => {
-    //     displacementImage.x = displacementImage.x + 1;
-    //     displacementImage.y = displacementImage.y + 1;
+    //     displacementImage.x = displacementImage.x + 1
+    //     displacementImage.y = displacementImage.y + 1
     // })
 
     })
 
+    let currentX = 0
+    let aimX = 0
+    let currentY = 0
+    let aimY = 0
+
     // now I want to listen to mouse movement
     section.addEventListener("mousemove", function(event) {
-        displacementImage.x = event.pageX
-        displacementImage.y = event.pageY
+        aimX = event.pageX
+        aimY = event.pageY
+        // displacementImage.y = event.pageY
     }
+
+    // make an animation in JS
+    const animate = function() {
+        // currentX should move towards aimX every frame
+        const diffX = aimX - currentX
+        const diffY = aimY - currentY
+
+        currentX = currentX + (diffX * 0.05)
+        currentY = currentY + (diffY * 0.05)
+
+        // if there's a displacement image loaded, move it
+        if(displacementImage) {
+            displacementImage.x = currentX
+            displacementImage.y = displacementImage.y + 1 + (diffY * 0.01)
+
+            rgbFilter.red = [diffX * 0.1, 0]
+            rgbFilter.green = [0, diffY * 0.1]
+        }
+
+        // keep running this animation every frame
+        requestAnimationFrame(animate)
+    }
+
+    animate()
 
 })
