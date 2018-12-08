@@ -23,6 +23,7 @@ sections.forEach(section => {
     // initialize/make a new image 
     let image = null
     let displacementImage = null
+    let rgbFilter  = new PIXI.filters.RGBSplitFilter([0,0],[0,0],[0,0])
 
     // make a new loader
     const loader = new PIXI.loaders.Loader()
@@ -52,18 +53,25 @@ sections.forEach(section => {
         image.filters = [
             // new PIXI.filters.BlurFilter(3, 5),
             // new PIXI.filters.NoiseFilter(.1),
-            new PIXI.filters.DisplacementFilter(displacementImage, 20)
+            new PIXI.filters.DisplacementFilter(displacementImage, 20),
+            rgbFilter
         ]
 
     // add the image to the app
     app.stage.addChild(image)
     app.stage.addChild(displacementImage)
 
-    app.ticker.add(() => {
-        displacementImage.x = displacementImage.x + 1;
-        displacementImage.y = displacementImage.y + 1;
-    })
+    // app.ticker.add(() => {
+    //     displacementImage.x = displacementImage.x + 1;
+    //     displacementImage.y = displacementImage.y + 1;
+    // })
 
     })
+
+    // now I want to listen to mouse movement
+    section.addEventListener("mousemove", function(event) {
+        displacementImage.x = event.pageX
+        displacementImage.y = event.pageY
+    }
 
 })
