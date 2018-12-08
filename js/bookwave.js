@@ -78,7 +78,7 @@ sections.forEach(section => {
         aimX = event.pageX
         aimY = event.pageY
         // displacementImage.y = event.pageY
-    }
+    })
 
     // make an animation in JS
     const animate = function() {
