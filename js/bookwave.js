@@ -29,7 +29,7 @@ sections.forEach(section => {
 
     // load in our image
     loader.add("image", originalImageSource)
-    loader.add("displacement", "displacement1.jpg")
+    loader.add("displacement", "assets/displacement1.jpg")
     loader.load((loader, resources) => {
         // once the image has loaded, now do things
         image = new PIXI.Sprite(resources.image.texture)
@@ -44,15 +44,15 @@ sections.forEach(section => {
         image.anchor.x = 0.5;
         image.anchor.y = 0.5;
 
-        displacementImage.width = 300
-        displacementImage.height = 300
+        displacementImage.width = 600
+        displacementImage.height = 600
         displacementImage.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT
 
 
         image.filters = [
             // new PIXI.filters.BlurFilter(3, 5),
             // new PIXI.filters.NoiseFilter(.1),
-            new PIXI.filters.DisplacementFilter(displacementImage, 100)
+            new PIXI.filters.DisplacementFilter(displacementImage, 20)
         ]
 
     // add the image to the app
@@ -60,7 +60,8 @@ sections.forEach(section => {
     app.stage.addChild(displacementImage)
 
     app.ticker.add(() => {
-        displacementImage.x = displacementImage.x + 0.01;
+        displacementImage.x = displacementImage.x + 1;
+        displacementImage.y = displacementImage.y + 1;
     })
 
     })
